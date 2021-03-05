@@ -47,7 +47,7 @@ describe('Connascent MarsRover Acceptance Tests', () => {
         for (let pack of inputPackages) {
             marsRoverReceiver.received(pack);
         }
-        await new Promise( r => setTimeout(r, 3100));
+        await new Promise( r => setTimeout(r, maxDelay + 100));
         expect(nasaAntenna.received).toBeCalledWith(["ER"])
     })
 })
