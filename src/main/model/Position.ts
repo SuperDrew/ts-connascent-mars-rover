@@ -2,42 +2,26 @@ import {Coordinate} from "./Coordinate";
 import {Direction} from "./Direction";
 import {format} from "util";
 import deepEqual = require("deep-equal");
-import {Symbols} from "./Symbols"
 
 export class Position {
     private coordinate: Coordinate;
     private direction: Direction;
 
-    private parseDirection(directionText: string): Direction {
-        switch (directionText) {
-            case Symbols.North:
-                return Direction.NORTH()
-            case Symbols.East:
-                return Direction.EAST()
-            case Symbols.South:
-                return Direction.SOUTH()
-            case Symbols.West:
-                return Direction.WEST()
-            default:
-                return Direction.NORTH()
-        }
-    }
-
-    constructor(x: number, y: number, directionText: string) {
+    constructor(x: number, y: number, direction: Direction) {
         this.coordinate = new Coordinate(x, y);
-        this.direction = this.parseDirection(directionText);
+        this.direction = direction;
     }
 
     turnLeft(): Position {
-        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnLeft().toString())
+        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnLeft())
     }
 
     turnRight(): Position {
-        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnRight().toString())
+        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnRight())
     }
 
     moveForward() {
-        var coordinate: Coordinate = new Coordinate(0, 0);
+        let coordinate: Coordinate = new Coordinate(0, 0);
         let s = this.direction.enumValue();
         if (s === "NORTH") {
             coordinate = this.coordinate.moveNorth()
@@ -48,7 +32,7 @@ export class Position {
         } else if (s === "WEST") {
             coordinate = this.coordinate.moveWest();
         }
-        return new Position(coordinate.x, coordinate.y, this.direction.toString());
+        return new Position(coordinate.x, coordinate.y, this.direction);
     }
 
     toString(): string {

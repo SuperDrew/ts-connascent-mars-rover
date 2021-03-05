@@ -62,7 +62,7 @@ export class CommandInterpreter {
 
         let coordinate: Coordinate = new Coordinate(parseInt(coords[0]), parseInt(coords[1]));
         let direction: Direction = <Direction>this.letterToDirection.get(coords[2]);
-        let position: Position = new Position(coordinate.x, coordinate.y, direction.toString());
+        let position: Position = new Position(coordinate.x, coordinate.y, direction);
         return new StartingPositionCommand(position);
     }
 
