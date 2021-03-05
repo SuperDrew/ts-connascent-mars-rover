@@ -9,6 +9,13 @@ import {Position} from "../model/Position";
 import {StartingPositionCommand} from "../commands/StartingPositionCommand";
 import {Symbols} from "../model/Symbols"
 
+enum CommandListIndex {
+    InitializationCommand = 0,
+    StartingPositionCommand = 1,
+    MovementCommand = 2,
+
+}
+
 export class CommandInterpreter {
     private letterToDirection: Map<string, Direction> = new Map([
         [Symbols.North, Direction.NORTH()],
@@ -19,17 +26,17 @@ export class CommandInterpreter {
 
     translate(commands: string): Array<ICommand> {
         let allCommands = new Array<ICommand>();
-        allCommands.push(this.getInitializationCommand(commands));
-        allCommands.push(this.getStartingPositionCommand(commands));
-        allCommands.push(...this.getMovementCommands(commands));
+        const lines: string[] = commands.split(Symbols.CommandSeparator);
+        allCommands.push(this.getInitializationCommand(lines[CommandListIndex.InitializationCommand]));
+        allCommands.push(this.getStartingPositionCommand(lines[CommandListIndex.StartingPositionCommand]));
+        allCommands.push(...this.getMovementCommands(lines[CommandListIndex.MovementCommand]));
 
         return allCommands;
     }
 
-    private getMovementCommands(commands: string): ICommand[] {
+    private getMovementCommands(movementCommandString: string): ICommand[] {
         let movementCommands = new Array<ICommand>();
-        let lines: string[] = commands.split(Symbols.CommandSeparator);
-        for (let command of Array.from(lines[2])) {
+        for (let command of movementCommandString) {
             switch (command) {
                 case Symbols.TurnLeft:
                     movementCommands.push(new TurnLeftCommand());
@@ -45,15 +52,13 @@ export class CommandInterpreter {
         return movementCommands;
     }
 
-    private getInitializationCommand(commands: string): InitializationCommand {
-        let lines: string[] = commands.split(Symbols.CommandSeparator);
-        let topRight: string[] = lines[0].split(" ");
+    private getInitializationCommand(initializationCommandString: string): InitializationCommand {
+        let topRight: string[] = initializationCommandString.split(" ");
         return new InitializationCommand(new Coordinate(parseInt(topRight[0]), parseInt(topRight[1])));
     }
 
-    private getStartingPositionCommand(commands: string): StartingPositionCommand {
-        let lines: string[] = commands.split(Symbols.CommandSeparator);
-        let coords: string[] = lines[1].split(" ");
+    private getStartingPositionCommand(startingPositionCommandString: string): StartingPositionCommand {
+        let coords: string[] = startingPositionCommandString.split(" ");
 
         let coordinate: Coordinate = new Coordinate(parseInt(coords[0]), parseInt(coords[1]));
         let direction: Direction = <Direction>this.letterToDirection.get(coords[2]);
