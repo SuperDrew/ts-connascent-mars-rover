@@ -1,6 +1,7 @@
 import {ISendNotifications} from "../ISendNotifications";
 import {ISendFinalStateBus} from "../bus/ISendFinalStateBus";
 import {INasaAntenna} from "./INasaAntenna";
+import {Position} from "../../model/Position";
 
 export class MarsRoverSender implements ISendNotifications {
 
@@ -15,12 +16,11 @@ export class MarsRoverSender implements ISendNotifications {
         marsRoverServiceBus.trigger(this);
     }
 
-    send(message: string): void {
-        let messageParts: string[] = message.split(" ");
+    send(position: Position): void {
         this.nasaAntenna.received([
-            "X" + messageParts[0],
-            "Y" + messageParts[1],
-            "D" + messageParts[2]
+            "X" + position.getX(),
+            "Y" + position.getY(),
+            "D" + position.getDirection()[0]
         ])
     }
 

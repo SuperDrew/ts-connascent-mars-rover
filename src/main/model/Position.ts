@@ -58,5 +58,17 @@ export class Position {
         return deepEqual(this.coordinate, o.coordinate) && this.direction === o.direction;
     }
 
+    getX(): number {
+        return this.coordinate.x;
+    }
+
+    getY(): number {
+        return this.coordinate.y;
+    }
+
+    getDirection(): string {
+        return this.direction.enumValue();
+    }
+
 
 }

@@ -30,7 +30,7 @@ export class MarsRoverController implements IProcessMessages {
         let commands: Array<ICommand> = this.commandInterpreter.translate(messageReceived);
         this.marsRoverEngine.execute(commands);
         let finalPosition: Position = this.marsRoverEngine.getPosition();
-        this.marsRoverServiceWriter.NotifyExecution(finalPosition.toString());
+        this.marsRoverServiceWriter.NotifyExecution(finalPosition);
     }
 
 }

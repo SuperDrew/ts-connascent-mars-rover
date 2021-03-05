@@ -1,13 +1,15 @@
 import {INasaAntenna} from "../main/infrastructure/spacecomm/INasaAntenna";
 import {MarsRoverSender} from "../main/infrastructure/spacecomm/MarsRoverSender";
 import {mock} from "jest-mock-extended";
+import {Position} from "../main/model/Position";
 
 describe('Test: MarsRoverSender', () => {
     it('should send message correctly', () => {
         const nasaAntenna: INasaAntenna = mock<INasaAntenna>();
         let marsRoverSender: MarsRoverSender = new MarsRoverSender(nasaAntenna);
 
-        marsRoverSender.send("6 99 S");
+        const position = new Position(6, 99, 'S')
+        marsRoverSender.send(position);
 
         expect(nasaAntenna.received).toBeCalledWith(["X6", "Y99", "DS"])
     });
