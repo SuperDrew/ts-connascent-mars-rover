@@ -1,4 +1,5 @@
 import {format} from "util";
+import {Symbols} from "../../model/Symbols"
 
 export class Message {
 
@@ -17,13 +18,13 @@ export class Message {
 
     private parsePosition(datagrams: Array<string>) {
         for (let datagram of datagrams) {
-            if(datagram.startsWith("X"))
+            if(datagram.startsWith(Symbols.X))
                 this.x = datagram.substring(1);
-            if(datagram.startsWith("Y"))
+            if(datagram.startsWith(Symbols.Y))
                 this.y = datagram.substring(1);
-            if(datagram.startsWith("D"))
+            if(datagram.startsWith(Symbols.Direction))
                 this.direction = datagram.substring(1);
-            if(datagram.startsWith("M"))
+            if(datagram.startsWith(Symbols.Moves))
                 this.commandsCount = Number.parseInt(datagram.substring(1));
         }
         return format("100 100\n%s %s %s\n", this.x, this.y, this.direction);

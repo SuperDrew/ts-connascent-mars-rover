@@ -2,6 +2,7 @@ import {Coordinate} from "./Coordinate";
 import {Direction} from "./Direction";
 import {format} from "util";
 import deepEqual = require("deep-equal");
+import {Symbols} from "./Symbols"
 
 export class Position {
     private coordinate: Coordinate;
@@ -9,13 +10,13 @@ export class Position {
 
     private parseDirection(directionText: string): Direction {
         switch (directionText) {
-            case "N":
+            case Symbols.North:
                 return Direction.NORTH()
-            case "E":
+            case Symbols.East:
                 return Direction.EAST()
-            case "S":
+            case Symbols.South:
                 return Direction.SOUTH()
-            case "W":
+            case Symbols.West:
                 return Direction.WEST()
             default:
                 return Direction.NORTH()

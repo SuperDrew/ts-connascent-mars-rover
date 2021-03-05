@@ -1,0 +1,15 @@
+export enum Symbols {
+  X = "X",
+  Y = "Y",
+  Moves = "M",
+  Direction = "D",
+  North = "N",
+  West = "W",
+  East = "E",
+  South = "S",
+  MoveForward = "F",
+  TurnLeft = "L",
+  TurnRight = "R",
+  Error = "ER",
+  CommandSeparator = "\n",
+}
